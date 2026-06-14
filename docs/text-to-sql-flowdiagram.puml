@@ -1,0 +1,28 @@
+@startuml
+start
+partition #2a9d8f BiblioIA {
+:Leer entrada del usuario;
+partition #e9c46a "API LLM" {
+:Enviar entrada al LLM a través de la API;
+}
+}
+partition #f4a261 LLM {
+:Formatear entrada a consulta MySQL;
+}
+partition #2a9d8f BiblioIA {
+    partition #e9c46a mysql.connector {
+:Enviar consulta MySQL a la base de datos;  
+    }
+
+}
+partition #e76f51 MySQL {
+:Realizar consulta MySQL a la base de datos;
+:Devolver tabla resultante;
+}
+partition #2a9d8f BiblioIA {
+    partition #e9c46a pandas {
+:Mostrar la tabla a través de Pandas en la aplicación;
+    }
+}
+stop
+@enduml
