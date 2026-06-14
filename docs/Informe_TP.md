@@ -1,6 +1,6 @@
 # Carátula
 
-![Logo UTN FRCU](https://hackmd.io/_uploads/Sk0OTDsbGg.png)
+![Logo UTN FRCU](https://frcu.utn.edu.ar/images/recursos/logos/MARCA_FACULTAD_REGIONAL_NEGRO.png)
 
 **Grupo**: Grupo Pandas
 
@@ -10,38 +10,39 @@
 
 **Fecha**: 19 de Junio de 2026
 
-# Introducción: descripción del problema y objetivos.
+# 1. Introducción: descripción del problema y objetivos.
 
 
-# Modelo Entidad-Relación (DER) completo con notación estándar.
+# 2. Modelo Entidad-Relación (DER) completo con notación estándar.
 
 
-# Modelo Relacional (esquema de tablas con tipos y constraints).
+# 3. Modelo Relacional (esquema de tablas con tipos y constraints).
 
 
-# Decisiones de diseño: justificación de tipos de datos, índices, políticas de FK.
+# 4. Decisiones de diseño: justificación de tipos de datos, índices, políticas de FK.
 
 
-# Descripción de cada stored procedure y trigger: propósito, parámetros, casos que maneja.
+# 5. Descripción de cada stored procedure y trigger: propósito, parámetros, casos que maneja.
 
 
-# Arquitectura del agente IA: diagrama de flujo del proceso Text-to-SQL.
+# 6. Arquitectura del agente IA: diagrama de flujo del proceso Text-to-SQL.
 
 
-# Prompt de sistema utilizado: versión final con explicación de cada sección.
+# 7. Prompt de sistema utilizado: versión final con explicación de cada sección.
 
 
-# Evaluación del agente: tabla con las 10+ preguntas, SQL generado, resultado y análisis de errores.
+# 8. Evaluación del agente: tabla con las 10+ preguntas, SQL generado, resultado y análisis de errores.
 
 
-# Módulo de recomendaciones: descripción del algoritmo y ejemplos de salida.
+# 9. Módulo de recomendaciones: descripción del algoritmo y ejemplos de salida.
 
 
-# Conclusiones: lecciones aprendidas, limitaciones del agente, mejoras posibles.
+# 10. Conclusiones: lecciones aprendidas, limitaciones del agente, mejoras posibles.
 
 
-# Bibliografía y recursos utilizados.
+# 11. Bibliografía y recursos utilizados.
 - https://dev.mysql.com/doc/connector-python/en/connector-python-example-connecting.html
 - https://ai.google.dev/gemini-api/docs/quickstart
 - https://ipywidgets.readthedocs.io/en/stable/index.html
 - https://dagster.io/blog/python-environment-variables
+- https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1
