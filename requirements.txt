@@ -1,2 +1,5 @@
 jupyter
 google-genai
+mysql-connector-python 
+pandas
+python-dotenv
