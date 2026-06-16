@@ -124,4 +124,3 @@ create procedure sp_renovar_prestamo( in id_prestamo2 int)
 
 DELIMITER ;
 
-
