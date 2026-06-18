@@ -33,13 +33,22 @@ create table Libro (
    anio_publicacion int,
    stock_total int not null default 0,
    stock_disponible int not null default 0,
-   id_genero int,
    constraint pk_libro primary key (isbn),
-   constraint chk_libro_stock check (stock_disponible >= 0 and stock_disponible <= stock_total),
-   constraint fk_libro_genero foreign key (id_genero)
-       references Genero(id_genero)
-       on update cascade
-       on delete set null
+   constraint chk_libro_stock check (stock_disponible >= 0 and stock_disponible <= stock_total)
+);
+
+create table Libro_Genero (
+    isbn varchar(20) not null,
+    id_genero int not null,
+    primary key (isbn, id_genero),
+    constraint fk_libro_genero_libro 
+        foreign key (isbn) 
+        references Libro (isbn) 
+        on delete cascade,
+    constraint fk_libro_genero_genero 
+        foreign key (id_genero) 
+        references Genero (id_genero) 
+         on delete cascade
 );
 create table Autor_libro (
    id_autor int,
