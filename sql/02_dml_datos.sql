@@ -2,70 +2,69 @@ USE biblioia;
 
 START TRANSACTION;
 
-	INSERT INTO Genero (nombre,descripcion) VALUES	
-		('Literatura Clásica', 'Obras fundamentales de la literatura universal que han perdurado en el tiempo, abarcando desde la antigüedad hasta la modernidad, ideales para el estudio en ediciones inalteradas o académicas.'),
-		('Ciencia Ficción' , 'Ficción especulativa que explora conceptos imaginativos y futuristas, viajes espaciales, tecnología avanzada y universos paralelos llenos de aventuras galácticas.'),
-		('Informática y Tecnología' , 'Material educativo, manuales técnicos y literatura académica sobre ingeniería de software, arquitectura de sistemas operativos, bases de datos y lenguajes de programación.'),
-		('Historia y Cultura Argentina' , 'Textos, ensayos y crónicas que documentan exhaustivamente el desarrollo histórico, político, las tradiciones, el folklore y la formación de la identidad nacional.'),
-		('Misterio y Policial' , 'Narrativa literaria centrada en la investigación y resolución de crímenes, enigmas lógicos y secretos, manteniendo la tensión y el suspenso hasta la última página.');
+	INSERT INTO Genero (nombre,descripcion) VALUES
+	
+	('Literatura Clásica', 'Obras fundamentales de la literatura universal que han perdurado en el tiempo, abarcando desde la antigüedad hasta la modernidad, ideales para el estudio en ediciones inalteradas o académicas.'),
+	('Ciencia Ficción' , 'Ficción especulativa que explora conceptos imaginativos y futuristas, viajes espaciales, tecnología avanzada y universos paralelos llenos de aventuras galácticas.'),
+	('Informática y Tecnología' , 'Material educativo, manuales técnicos y literatura académica sobre ingeniería de software, arquitectura de sistemas operativos, bases de datos y lenguajes de programación.'),
+	('Historia y Cultura Argentina' , 'Textos, ensayos y crónicas que documentan exhaustivamente el desarrollo histórico, político, las tradiciones, el folklore y la formación de la identidad nacional.'),
+	('Misterio y Policial' , 'Narrativa literaria centrada en la investigación y resolución de crímenes, enigmas lógicos y secretos, manteniendo la tensión y el suspenso hasta la última página.');
 	
 COMMIT;
 
+
 START TRANSACTION;
 	
-	INSERT INTO Autor (nombre , apellido , nacionalidad) VALUES		
-		('Franz', 'Kafka', 'Checa'),
-		('Albert', 'Camus', 'Francesa'),
-		('Francis Scott', 'Fitzgerald', 'Estadounidense'),
-		('Domingo Faustino', 'Sarmiento', 'Argentina'),
-		('Jorge Luis', 'Borges', 'Argentina'),
-		('Isaac', 'Asimov', 'Estadounidense'),
-		('George', 'Orwell', 'Británica'),
-		('Agatha', 'Christie', 'Británica'),
-		('Andrew', 'Tanenbaum', 'Estadounidense'), 
-		('Dennis', 'Ritchie', 'Estadounidense'),   
-		('Ian', 'Sommerville', 'Británica'),
-		('Edgar Allan', 'Poe', 'Estadounidense'),
-		('Fiódor' , 'Dostoyevski' , 'Ruso'),
-		('Robert Louis' , 'Stevenson' , 'Escocés'),
-		('Claudia' , 'Gray' , 'Estadounidense'),
-		('James' , 'Luceno' , 'Estadounidense');
-
+	INSERT INTO Autor (nombre , apellido , nacionalidad) VALUES
+		
+	('Franz', 'Kafka', 'Checa'),
+	('Albert', 'Camus', 'Francesa'),
+	('Francis Scott', 'Fitzgerald', 'Estadounidense'),
+	('Domingo Faustino', 'Sarmiento', 'Argentina'),
+	('Jorge Luis', 'Borges', 'Argentina'),
+	('Isaac', 'Asimov', 'Estadounidense'),
+	('George', 'Orwell', 'Británica'),
+	('Agatha', 'Christie', 'Británica'),
+	('Andrew', 'Tanenbaum', 'Estadounidense'), 
+	('Dennis', 'Ritchie', 'Estadounidense'),   
+	('Ian', 'Sommerville', 'Británica'),
+	('Edgar Allan', 'Poe', 'Estadounidense');
+	
 COMMIT;
 
 START TRANSACTION;
 
 	INSERT INTO Socio (dni, nombre, apellido, email, fecha_alta, estado) VALUES	
-		('41234567', 'Marco', 'Gallegos', 'mgallegos@gmail.com', '2024-02-15', 'activo'),
-		('42345678', 'Facundo', 'Dun', 'fdun@gmail.com', '2024-03-10', 'activo'),
-		('40123987', 'Ignacio Nicolás', 'Picart', 'ipicart@hotmail.com', '2024-03-12', 'activo'),
-		('39876543', 'Matias', 'Valdez', 'mvaldez@utn.edu.ar', '2024-04-01', 'activo'),
-		('43567890', 'Valentino', 'Gussalli', 'vgussalli@gmail.com', '2024-05-20', 'suspendido'),
-		('38765432', 'Antonella', 'Gomez', 'antonella.gomez@gmail.com', '2024-06-11', 'activo'),
-		('35678901', 'Juan', 'Perez', 'jperez@yahoo.com', '2024-07-05', 'activo'),
-		('34567890', 'Lucía', 'Fernandez', 'lfernandez@gmail.com', '2024-08-15', 'activo'),
-		('36789012', 'Martín', 'Rodriguez', 'mrodriguez@outlook.com', '2024-09-02', 'suspendido'),
-		('31234567', 'Sofía', 'Martinez', 'smartinez@gmail.com', '2024-10-10', 'activo'),
-		('29876543', 'Alejandro', 'Lopez', 'alopez@gmail.com', '2024-11-20', 'activo'),
-		('40567890', 'Camila', 'Gonzalez', 'cgonzalez@hotmail.com', '2024-12-05', 'activo'),
-		('37654321', 'Lucas', 'Diaz', 'ldiaz@gmail.com', '2025-01-15', 'activo'),
-		('32345678', 'Mariana', 'Perez', 'mperez@yahoo.com', '2025-02-20', 'activo'),
-		('38901234', 'Agustín', 'Sanchez', 'asanchez@gmail.com', '2025-03-10', 'suspendido'),
-		('33456789', 'Florencia', 'Romero', 'fromero@outlook.com', '2025-04-05', 'activo'),
-		('39012345', 'Joaquín', 'Sosa', 'jsosa@gmail.com', '2025-05-12', 'activo'),
-		('34561234', 'Julieta', 'Torres', 'jtorres@hotmail.com', '2025-06-20', 'activo'),
-		('35672345', 'Tomás', 'Ruiz', 'truiz@gmail.com', '2025-07-15', 'activo'),
-		('36783456', 'Micaela', 'Alvarez', 'malvarez@yahoo.com', '2025-08-10', 'activo'),
-		('37894567', 'Nicolás', 'Gimenez', 'ngimenez@gmail.com', '2025-09-05', 'activo'),
-		('38905678', 'Carolina', 'Castro', 'ccastro@outlook.com', '2025-10-20', 'suspendido'),
-		('39016789', 'Federico', 'Molina', 'fmolina@gmail.com', '2025-11-15', 'activo'),
-		('30127890', 'Paula', 'Rios', 'prios@hotmail.com', '2025-12-10', 'activo'),
-		('31238901', 'Diego', 'Silva', 'dsilva@gmail.com', '2026-01-05', 'activo'),
-		('32349012', 'Victoria', 'Dominguez', 'vdominguez@yahoo.com', '2026-02-20', 'activo'),
-		('33450123', 'Gonzalo', 'Vega', 'gvega@gmail.com', '2026-03-15', 'activo'),
-		('34561235', 'Daniela', 'Quiroga', 'dquiroga@outlook.com', '2026-04-10', 'activo'),
-		('35672346', 'Ezequiel', 'Luna', 'eluna@gmail.com', '2026-05-05', 'activo'),
-		('36783457', 'Antonella', 'Paz', 'apaz@hotmail.com', '2026-06-01', 'suspendido');
+	('41234567', 'Marco', 'Gallegos', 'mgallegos@gmail.com', '2024-02-15', 'activo'),
+	('42345678', 'Facundo', 'Dun', 'fdun@gmail.com', '2024-03-10', 'activo'),
+	('40123987', 'Ignacio Nicolás', 'Picart', 'ipicart@hotmail.com', '2024-03-12', 'activo'),
+	('39876543', 'Matias', 'Valdez', 'mvaldez@utn.edu.ar', '2024-04-01', 'activo'),
+	('43567890', 'Valentino', 'Gussalli', 'vgussalli@gmail.com', '2024-05-20', 'suspendido'),
+	('38765432', 'Antonella', 'Gomez', 'antonella.gomez@gmail.com', '2024-06-11', 'activo'),
+	('35678901', 'Juan', 'Perez', 'jperez@yahoo.com', '2024-07-05', 'activo'),
+	('34567890', 'Lucía', 'Fernandez', 'lfernandez@gmail.com', '2024-08-15', 'activo'),
+	('36789012', 'Martín', 'Rodriguez', 'mrodriguez@outlook.com', '2024-09-02', 'suspendido'),
+	('31234567', 'Sofía', 'Martinez', 'smartinez@gmail.com', '2024-10-10', 'activo'),
+	('29876543', 'Alejandro', 'Lopez', 'alopez@gmail.com', '2024-11-20', 'activo'),
+	('40567890', 'Camila', 'Gonzalez', 'cgonzalez@hotmail.com', '2024-12-05', 'activo'),
+	('37654321', 'Lucas', 'Diaz', 'ldiaz@gmail.com', '2025-01-15', 'activo'),
+	('32345678', 'Mariana', 'Perez', 'mperez@yahoo.com', '2025-02-20', 'activo'),
+	('38901234', 'Agustín', 'Sanchez', 'asanchez@gmail.com', '2025-03-10', 'suspendido'),
+	('33456789', 'Florencia', 'Romero', 'fromero@outlook.com', '2025-04-05', 'activo'),
+	('39012345', 'Joaquín', 'Sosa', 'jsosa@gmail.com', '2025-05-12', 'activo'),
+	('34561234', 'Julieta', 'Torres', 'jtorres@hotmail.com', '2025-06-20', 'activo'),
+	('35672345', 'Tomás', 'Ruiz', 'truiz@gmail.com', '2025-07-15', 'activo'),
+	('36783456', 'Micaela', 'Alvarez', 'malvarez@yahoo.com', '2025-08-10', 'activo'),
+	('37894567', 'Nicolás', 'Gimenez', 'ngimenez@gmail.com', '2025-09-05', 'activo'),
+	('38905678', 'Carolina', 'Castro', 'ccastro@outlook.com', '2025-10-20', 'suspendido'),
+	('39016789', 'Federico', 'Molina', 'fmolina@gmail.com', '2025-11-15', 'activo'),
+	('30127890', 'Paula', 'Rios', 'prios@hotmail.com', '2025-12-10', 'activo'),
+	('31238901', 'Diego', 'Silva', 'dsilva@gmail.com', '2026-01-05', 'activo'),
+	('32349012', 'Victoria', 'Dominguez', 'vdominguez@yahoo.com', '2026-02-20', 'activo'),
+	('33450123', 'Gonzalo', 'Vega', 'gvega@gmail.com', '2026-03-15', 'activo'),
+	('34561235', 'Daniela', 'Quiroga', 'dquiroga@outlook.com', '2026-04-10', 'activo'),
+	('35672346', 'Ezequiel', 'Luna', 'eluna@gmail.com', '2026-05-05', 'activo'),
+	('36783457', 'Antonella', 'Paz', 'apaz@hotmail.com', '2026-06-01', 'suspendido');
 
 COMMIT;
 
@@ -82,7 +81,6 @@ START TRANSACTION;
 		('9788499083209', 'Fundación', 1951, 6, 6, 2),
 		('9788499890944', '1984', 1949, 8, 8, 2),
 		('9788499890951', 'Rebelión en la granja', 1945, 5, 5, 2),
-		('9789500511874', 'El payador perseguido', 1972, 3, 3, 4),
 		('9788467045338', 'Asesinato en el Orient Express', 1934, 4, 4, 5),
 		('9788467045406', 'Y no quedó ninguno', 1939, 5, 5, 5),
 		('9788441413818', 'Cuentos Completos', 1845, 4, 4, 5),
@@ -91,8 +89,8 @@ START TRANSACTION;
 		('9789688802308', 'El lenguaje de programación C', 1978, 5, 5, 3),
 		('9786073206031', 'Ingeniería de Software', 1982, 3, 3, 3),
 		('9788420674251', 'El Proceso', 1925, 4, 4, 1),
-		('9788420674107', 'La Peste', 1947, 5, 5, 1);
-	
+		('9788420674107', 'La Peste', 1947, 5, 5, 1),
+		('9789875666502', 'El libro de arena', 1975, 3, 3, 4);
 		SAVEPOINT libros_cargados;
 
 	INSERT INTO Ejemplar (isbn, nro_ejemplar, estado_fisico) VALUES #Alta de ejemplares o copias de cada libro
@@ -105,11 +103,12 @@ START TRANSACTION;
 		('9788435020471', 1, 'BUENO'), ('9788435020471', 2, 'BUENO'), ('9788435020471', 3, 'BUENO'), ('9788435020471', 4, 'BUENO'), ('9788435020471', 5, 'BUENO'), ('9788435020471', 6, 'BUENO'), ('9788435020471', 7, 'BUENO'),
 		('9788499083209', 1, 'BUENO'), ('9788499083209', 2, 'BUENO'), ('9788499083209', 3, 'BUENO'), ('9788499083209', 4, 'BUENO'), ('9788499083209', 5, 'BUENO'), ('9788499083209', 6, 'BUENO'),
 		('9788499890944', 1, 'BUENO'), ('9788499890944', 2, 'BUENO'), ('9788499890944', 3, 'BUENO'), ('9788499890944', 4, 'BUENO'), ('9788499890944', 5, 'BUENO'), ('9788499890944', 6, 'BUENO'), ('9788499890944', 7, 'BUENO'), ('9788499890944', 8, 'BUENO'),
-		('9788499890951', 1, 'BUENO'), ('9788499890951', 2, 'BUENO');
+		('9788499890951', 1, 'BUENO'), ('9788499890951', 2, 'BUENO'),
+		('9789875666502', 1, 'BUENO'), ('9789875666502', 2, 'BUENO'), ('9789875666502', 3, 'BUENO'); # IDs 51, 52 y 53
 	
 		SAVEPOINT ejemplares_cargados;
 
-    -- BLOQUE 1: Devueltos
+    # BLOQUE 1: Devueltos
 	INSERT INTO Prestamo (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, fecha_devolucion, estado) VALUES
 		(1, 1, '2025-08-10', '2025-08-25', '2025-08-20', 'devuelto'), 		
 		(2, 2, '2025-09-01', '2025-09-16', '2025-09-15', 'devuelto'),
@@ -137,9 +136,9 @@ START TRANSACTION;
 		(24, 24, '2026-05-15', '2026-05-30', '2026-05-29', 'devuelto'),
 		(25, 25, '2026-05-20', '2026-06-04', '2026-06-02', 'devuelto');
 
-		SAVEPOINT prestamos_devueltos; #Alta de 25 prestamos que han sido devueltos
+		SAVEPOINT prestamos_devueltos; # Alta de 25 prestamos que han sido devueltos
 	
-    -- BLOQUE 2: Activos (Fijate que abrimos un nuevo INSERT)
+    # BLOQUE 2: Activos (Fijate que abrimos un nuevo INSERT)
     INSERT INTO Prestamo (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, fecha_devolucion, estado) VALUES
 		(26, 26, '2026-06-01', '2026-06-16', NULL, 'activo'), 
 		(27, 27, '2026-06-02', '2026-06-17', NULL, 'activo'),
@@ -155,11 +154,12 @@ START TRANSACTION;
 		(8, 37, '2026-06-10', '2026-06-25', NULL, 'activo'),
 		(10, 38, '2026-06-10', '2026-06-25', NULL, 'activo'),
 		(11, 39, '2026-06-11', '2026-06-26', NULL, 'activo'),
-		(13, 40, '2026-06-11', '2026-06-26', NULL, 'activo');
+		(13, 40, '2026-06-11', '2026-06-26', NULL, 'activo'),
+		(12, 51, '2026-06-12', '2026-06-27', NULL, 'activo'); # Nuevo prestamo activo
 		
 		SAVEPOINT prestamos_activos; #15 Activos (Vencen después de hoy 11 de Junio)
 
-    -- BLOQUE 3: Vencidos (Abrimos otro nuevo INSERT)
+    # BLOQUE 3: Vencidos (Abrimos otro nuevo INSERT)
     INSERT INTO Prestamo (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, fecha_devolucion, estado) VALUES
 		(14, 41, '2026-04-10', '2026-04-25', NULL, 'vencido'),
 		(15, 42, '2026-04-15', '2026-04-30', NULL, 'vencido'),
@@ -182,4 +182,33 @@ START TRANSACTION;
 		      	AND P.estado IN ('activo', 'vencido')); #Si un libro se encuentra 'devuelto' ya se encuentra en la biblioteca, no tiene sentido contarlo
 
 COMMIT;
+
+
+START TRANSACTION;
+
+	INSERT INTO Autor_libro (id_autor,isbn) VALUES
+	
+		(1, '9789875666472'),  -- Franz Kafka - La Metamorfosis
+		(2, '9788420636945'),  -- Albert Camus - El Extranjero
+		(3, '9788420674114'),  -- F. Scott Fitzgerald - El Gran Gatsby
+		(4, '9789871081446'),  -- Domingo F. Sarmiento - Facundo: Civilización y Barbarie
+		(5, '9789875666489'), -- Jorge Luis Borges - Ficciones
+		(5, '9789875666496'),  -- Jorge Luis Borges - El Aleph
+		(5, '9789875666502'),  -- Jorge Luis Borges - El libro de arena
+		(6, '9788435020471'),  -- Isaac Asimov - Yo, Robot
+		(6, '9788499083209'),  -- Isaac Asimov - Fundación
+		(7, '9788499890944'),  -- George Orwell - 1984
+		(7, '9788499890951'),  -- George Orwell - Rebelión en la granja
+		(8, '9788467045338'),  -- Agatha Christie - Asesinato en el Orient Express
+		(8, '9788467045406'),  -- Agatha Christie - Y no quedó ninguno
+		(12, '9788441413818'), -- Edgar Allan Poe - Cuentos Completos
+		(9, '9786073214036'),  -- Andrew Tanenbaum - Sistemas Operativos Modernos
+		(9, '9786073213114'),  -- Andrew Tanenbaum - Redes de Computadoras
+		(10, '9789688802308'), -- Dennis Ritchie - El lenguaje de programación C
+		(11, '9786073206031'), -- Ian Sommerville - Ingeniería de Software
+		(1, '9788420674251'),  -- Franz Kafka - El Proceso
+		(2, '9788420674107');  -- Albert Camus - La Peste
+
+COMMIT;
+
 
