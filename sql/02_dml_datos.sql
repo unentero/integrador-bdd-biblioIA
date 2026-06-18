@@ -138,7 +138,7 @@ START TRANSACTION;
 
 		SAVEPOINT prestamos_devueltos; # Alta de 25 prestamos que han sido devueltos
 	
-    # BLOQUE 2: Activos (Fijate que abrimos un nuevo INSERT)
+    -- BLOQUE 2: Activos 
     INSERT INTO Prestamo (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, fecha_devolucion, estado) VALUES
 		(26, 26, '2026-06-01', '2026-06-16', NULL, 'activo'), 
 		(27, 27, '2026-06-02', '2026-06-17', NULL, 'activo'),
@@ -159,7 +159,7 @@ START TRANSACTION;
 		
 		SAVEPOINT prestamos_activos; #15 Activos (Vencen después de hoy 11 de Junio)
 
-    # BLOQUE 3: Vencidos (Abrimos otro nuevo INSERT)
+    -- BLOQUE 3: Vencidos
     INSERT INTO Prestamo (id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, fecha_devolucion, estado) VALUES
 		(14, 41, '2026-04-10', '2026-04-25', NULL, 'vencido'),
 		(15, 42, '2026-04-15', '2026-04-30', NULL, 'vencido'),
