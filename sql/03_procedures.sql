@@ -123,4 +123,64 @@ create procedure sp_renovar_prestamo( in id_prestamo2 int)
 
 
 DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE Recomendar(
+    IN p_id_socio INT
+)
+BEGIN
+    WITH HistorialSocio AS (
+        SELECT DISTINCT 
+            lg.id_genero,
+            al.id_autor,
+            l.isbn AS isbn_leido
+        FROM Prestamo p
+        INNER JOIN Ejemplar e ON p.id_ejemplar = e.id_ejemplar
+        INNER JOIN Libro l ON e.isbn = l.isbn
+        LEFT JOIN Libro_Genero lg ON l.isbn = lg.isbn
+        LEFT JOIN Autor_libro al ON l.isbn = al.isbn
+        WHERE p.id_socio = p_id_socio
+    ),
+    LibrosNoLeidos AS (
+        SELECT l.isbn, l.titulo, l.stock_disponible
+        FROM Libro l
+        WHERE l.stock_disponible > 0
+          AND l.isbn NOT IN (
+              SELECT isbn_leido 
+              FROM HistorialSocio 
+              WHERE isbn_leido IS NOT NULL
+          )
+    )
+    SELECT DISTINCT 
+        lnl.isbn,
+        lnl.titulo,
+        lnl.stock_disponible
+    FROM LibrosNoLeidos lnl
+    INNER JOIN Libro_Genero lg ON lnl.isbn = lg.isbn
+    INNER JOIN Autor_libro al ON lnl.isbn = al.isbn
+    WHERE 
+        lg.id_genero IN (SELECT id_genero FROM HistorialSocio WHERE id_genero IS NOT NULL)
+        OR 
+        al.id_autor IN (SELECT id_autor FROM HistorialSocio WHERE id_autor IS NOT NULL)
+    ORDER BY lnl.titulo;
+
+END //
+
+DELIMITER ;
+DELIMITER //
+CREATE PROCEDURE LibrosLeidos(in idSocio int)
+BEGIN
+	SELECT distinct(l.titulo), GROUP_CONCAT(DISTINCT g.nombre SEPARATOR ', ') AS generos, CONCAT(a.nombre, ' ', a.apellido) as 'autor'   from Libro l 
+	join Libro_Genero lg on l.isbn = lg.isbn 
+	join Genero g on lg.id_genero = g.id_genero 
+	join Ejemplar e on e.isbn = l.isbn
+	join Prestamo p on p.id_ejemplar = e.id_ejemplar 
+	join Socio s on s.id_socio = p.id_socio 
+	join Autor_libro al on al.isbn = l.isbn 
+	join Autor a on a.id_autor = al.id_autor
+	where s.id_socio = idSocio
+	GROUP BY l.isbn, l.titulo, l.anio_publicacion;
+
+END //
+DELIMITER ;
 
