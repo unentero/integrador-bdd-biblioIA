@@ -82,6 +82,51 @@ create procedure sp_generar_sancion( in id_socio2 int, in tipo2 varchar(50), in 
 
 DELIMITER ;
 
+DELIMITER //
+
+CREATE PROCEDURE sp_registrar_devolucion(IN par_id_prestamo INT)
+BEGIN
+
+	# Definimos variables para almacenar datos
+	DECLARE var_id_prestamo INT;
+	DECLARE var_id_socio INT;
+	DECLARE var_id_ejemplar INT;
+	DECLARE var_fecha_vencimiento DATE;
+	DECLARE var_estado_prestamo VARCHAR(20);
+
+	SELECT id_prestamo, id_socio, id_ejemplar, fecha_prestamo, fecha_vencimiento, estado 
+	INTO var_id_prestamo, var_id_socio, var_id_ejemplar , var_fecha_vencimiento, var_estado_prestamo
+	FROM Prestamo
+	WHERE id_prestamo = par_id_prestamo;
+	
+	
+	IF var_estado_prestamo <> 'devuelto' THEN
+	
+		# Si el prestamo ya se encuentra vencido, la sancion se crea cuando el socio se presenta a devolver el ejemplar
+		# Si al momento de devolver el ejemplar, aun no se encuentra el estado=vencido pero ya se ha excedido la fecha, se genera la sancion
+		IF var_estado_prestamo = 'vencido' OR var_fecha_vencimiento < CURDATE() THEN
+			CALL sp_generar_sancion(var_id_socio, 'Mora', DATEDIFF(CURDATE(), var_fecha_vencimiento));
+		END IF;	
+	
+		# Se cambia el estado del prestamo, y se carga la fecha de devolucion como la fecha actual
+		UPDATE Prestamo
+		SET estado = 'devuelto',
+			fecha_devolucion = CURDATE()
+		WHERE id_prestamo = var_id_prestamo;
+		
+		# Luego de actualizar en la tabla Prestamo, deberia ejecutarse el trigger trg_actualizar_stock
+		
+		# Asumimos que casi siempre son devueltos en buen estado, y cuando no es asi se modifica manualmente el estado del ejemplar(?
+		UPDATE Ejemplar
+		SET estado_fisico = 'bueno'
+		WHERE id_ejemplar = var_id_ejemplar;	
+		
+	END IF;
+	
+END//
+
+DELIMITER ;
+
 
 DELIMITER //
 
@@ -123,4 +168,3 @@ create procedure sp_renovar_prestamo( in id_prestamo2 int)
 
 
 DELIMITER ;
-
