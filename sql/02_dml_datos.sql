@@ -70,27 +70,27 @@ COMMIT;
 
 START TRANSACTION;
 
-	INSERT INTO Libro (isbn, titulo, anio_publicacion, stock_total, stock_disponible, id_genero) VALUES
-		('9789875666472', 'La Metamorfosis', 1915, 5, 5, 1), # Alta de libros
-		('9788420636945', 'El Extranjero', 1942, 4, 4, 1),
-		('9788420674114', 'El Gran Gatsby', 1925, 3, 3, 1),
-		('9789871081446', 'Facundo: Civilización y Barbarie', 1845, 6, 6, 4),
-		('9789875666489', 'Ficciones', 1944, 4, 4, 4),
-		('9789875666496', 'El Aleph', 1949, 5, 5, 4),
-		('9788435020471', 'Yo, Robot', 1950, 7, 7, 2),
-		('9788499083209', 'Fundación', 1951, 6, 6, 2),
-		('9788499890944', '1984', 1949, 8, 8, 2),
-		('9788499890951', 'Rebelión en la granja', 1945, 5, 5, 2),
-		('9788467045338', 'Asesinato en el Orient Express', 1934, 4, 4, 5),
-		('9788467045406', 'Y no quedó ninguno', 1939, 5, 5, 5),
-		('9788441413818', 'Cuentos Completos', 1845, 4, 4, 5),
-		('9786073214036', 'Sistemas Operativos Modernos', 2001, 3, 3, 3),
-		('9786073213114', 'Redes de Computadoras', 1981, 4, 4, 3),
-		('9789688802308', 'El lenguaje de programación C', 1978, 5, 5, 3),
-		('9786073206031', 'Ingeniería de Software', 1982, 3, 3, 3),
-		('9788420674251', 'El Proceso', 1925, 4, 4, 1),
-		('9788420674107', 'La Peste', 1947, 5, 5, 1),
-		('9789875666502', 'El libro de arena', 1975, 3, 3, 4);
+	INSERT INTO Libro (isbn, titulo, anio_publicacion, stock_total, stock_disponible) VALUES
+		('9789875666472', 'La Metamorfosis', 1915, 5, 5, # Alta de libros
+		('9788420636945', 'El Extranjero', 1942, 4, 4),
+		('9788420674114', 'El Gran Gatsby', 1925, 3, 3),
+		('9789871081446', 'Facundo: Civilización y Barbarie', 1845, 6, 6),
+		('9789875666489', 'Ficciones', 1944, 4, 4),
+		('9789875666496', 'El Aleph', 1949, 5, 5)
+		('9788435020471', 'Yo, Robot', 1950, 7, 7),
+		('9788499083209', 'Fundación', 1951, 6, 6),
+		('9788499890944', '1984', 1949, 8, 8),
+		('9788499890951', 'Rebelión en la granja', 1945, 5, 5),
+		('9788467045338', 'Asesinato en el Orient Express', 1934, 4, 4),
+		('9788467045406', 'Y no quedó ninguno', 1939, 5, 5),
+		('9788441413818', 'Cuentos Completos', 1845, 4, 4),
+		('9786073214036', 'Sistemas Operativos Modernos', 2001, 3, 3),
+		('9786073213114', 'Redes de Computadoras', 1981, 4, 4),
+		('9789688802308', 'El lenguaje de programación C', 1978, 5, 5),
+		('9786073206031', 'Ingeniería de Software', 1982, 3, 3),
+		('9788420674251', 'El Proceso', 1925, 4, 4),
+		('9788420674107', 'La Peste', 1947, 5, 5),
+		('9789875666502', 'El libro de arena', 1975, 3, 3);
 		SAVEPOINT libros_cargados;
 
 	INSERT INTO Ejemplar (isbn, nro_ejemplar, estado_fisico) VALUES #Alta de ejemplares o copias de cada libro
