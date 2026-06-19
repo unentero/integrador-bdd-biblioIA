@@ -17,7 +17,6 @@ BEGIN
 	
 	# SIGNAL detiene la ejecucion del programa.
 	# SQLSTATE '45000' es un codigo estandar internacional resevado para excepciones definidas por el usuario. 
-	# Si el socio ya se encuentra suspendido, no hace falta buscar sanciones correspondientes en la tabla Sancion.
 	IF var_estado_socio = 'suspendido' THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'ERROR: El socio se encuentra suspendido. No puede solicitar prestamos';
 	ELSEIF var_estado_socio = 'baja' THEN
