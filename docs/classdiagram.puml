@@ -1,0 +1,64 @@
+@startuml
+left to right direction
+class Autor{
+    id_autor : INT
+    nombre : STRING
+    apellido : STRING
+    nacionalidad : STRING
+}
+class Libro{
+    isbn : STRING
+    titulo : STRING
+    anio_publicacion : STRING
+    stock_total : INT
+    stock_disponible : INT
+}
+class Genero{
+    id_genero : INT
+    nombre : STRING
+    descripcion : STRING
+}
+class Ejemplar{
+    id_ejemplar : INT
+    isbn : INT
+    nro_ejemplar : INT
+    estado_fisico : ['bueno', 'regular', 'reparacion', 'baja']
+}
+class Prestamo{
+    id_prestamo : INT
+    fecha_prestamo : DATE
+    fecha_vencimiento : DATE
+    fecha_devolucion : DATE
+    estado : STRING 
+}
+class Socio{
+    id_socio : INT
+    dni : STRING
+    nombre : STRING
+    apellido : STRING
+    email : STRING
+    fecha_alta : DATE
+    estado : STRING
+}
+class Sancion{
+    id_sancion : INT
+    tipo : STRING
+    fecha_inicio : DATE
+    fecha_fin : DATE
+    motivo : STRING
+}
+class auditoria_prestamos{
+    id_auditoria : INT
+    accion : STRING
+    fecha_hora : DATETIME
+
+}
+Autor"*"--"*"Libro
+Libro"*"--"*"Genero
+Libro"1"--"*"Ejemplar
+Ejemplar"1"--"*"Prestamo
+Socio"1"--"*"Prestamo
+Sancion"*"--"1"Socio
+Prestamo"1"--"1"auditoria_prestamos
+
+@enduml
