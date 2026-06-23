@@ -105,10 +105,9 @@ CREATE TABLE Auditoria_Prestamos (
    fecha_hora DATETIME NOT NULL,
    usuario_bd VARCHAR(50) NOT NULL, #Usuario que ha realizado el cambio
    CONSTRAINT chk_accion CHECK (accion IN ('insert', 'update', 'delete')),
+   CONSTRAINT fk_prestamo FOREIGN KEY (id_prestamo) REFERENCES Prestamo(id_prestamo) ON UPDATE CASCADE, 
    CONSTRAINT pk_auditoria PRIMARY KEY (id_auditoria)
 );
-
-
 
 
 create index idx_socio_dni on Socio(dni);
