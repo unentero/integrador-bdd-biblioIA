@@ -71,12 +71,12 @@ COMMIT;
 START TRANSACTION;
 
 	INSERT INTO Libro (isbn, titulo, anio_publicacion, stock_total, stock_disponible) VALUES
-		('9789875666472', 'La Metamorfosis', 1915, 5, 5, # Alta de libros
+		('9789875666472', 'La Metamorfosis', 1915, 5, 5), # Alta de libros
 		('9788420636945', 'El Extranjero', 1942, 4, 4),
 		('9788420674114', 'El Gran Gatsby', 1925, 3, 3),
 		('9789871081446', 'Facundo: Civilización y Barbarie', 1845, 6, 6),
 		('9789875666489', 'Ficciones', 1944, 4, 4),
-		('9789875666496', 'El Aleph', 1949, 5, 5)
+		('9789875666496', 'El Aleph', 1949, 5, 5),
 		('9788435020471', 'Yo, Robot', 1950, 7, 7),
 		('9788499083209', 'Fundación', 1951, 6, 6),
 		('9788499890944', '1984', 1949, 8, 8),
@@ -211,4 +211,14 @@ START TRANSACTION;
 
 COMMIT;
 
+START TRANSACTION;
 
+	INSERT INTO Sancion (id_socio, tipo, fecha_inicio, fecha_fin, motivo) VALUES 
+	
+    (5, 'Falta de pago', '2026-01-15', '2026-08-15', 'Adeuda más de 3 meses consecutivos de la cuota social desde el año pasado.'),
+    (9, 'Infracción al reglamento', '2026-02-10', '2026-09-10', 'Daños comprobados a las instalaciones del área deportiva.'),
+    (15, 'Mal comportamiento', '2026-03-20', '2026-11-20', 'Agresión verbal reiterada a otros socios y personal del club.'),
+    (22, 'Falta de pago', '2026-04-05', '2026-10-05', 'Falta de pago de la cuota extraordinaria de mantenimiento.'),
+    (30, 'Infracción al reglamento', '2026-06-02', '2026-12-02', 'Uso indebido del carnet de socia inmediatamente después del alta.');
+
+COMMIT;
