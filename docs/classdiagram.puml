@@ -59,6 +59,6 @@ Libro"1"--"*"Ejemplar
 Ejemplar"1"--"*"Prestamo
 Socio"1"--"*"Prestamo
 Sancion"*"--"1"Socio
-Prestamo"1"--"1"auditoria_prestamos
+Prestamo"1"--"*"auditoria_prestamos
 
 @enduml

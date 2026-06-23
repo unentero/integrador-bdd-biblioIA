@@ -38,8 +38,7 @@ consultas SQL.
 # 2. Base de Datos
 ## 2.1. Modelo Entidad-Relación (DER) completo con notación estándar.
 
-![{1DCC89C9-1C55-4541-86F6-70260293B1AE}](https://hackmd.io/_uploads/B1tRn1GMfx.png)
-
+![classdiagram](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/classdiagram.png?raw=true)
 
 ## 2.2. Modelo Relacional (esquema de tablas con tipos y constraints).
 ``` MySQL
@@ -145,15 +144,14 @@ create table Sancion (
 
 CREATE TABLE Auditoria_Prestamos (
    id_auditoria INT AUTO_INCREMENT,
-   id_prestamo INT NOT NULL,    # ID del prestamo que fue cargado, actualizado o eliminado
-   accion VARCHAR(10) NOT NULL, # Insert, update o delete
+   id_prestamo INT NOT NULL, 
+   accion VARCHAR(10) NOT NULL, 
    fecha_hora DATETIME NOT NULL,
-   usuario_bd VARCHAR(50) NOT NULL, #Usuario que ha realizado el cambio
+   usuario_bd VARCHAR(50) NOT NULL, 
    CONSTRAINT chk_accion CHECK (accion IN ('insert', 'update', 'delete')),
+   CONSTRAINT fk_prestamo FOREIGN KEY (id_prestamo) REFERENCES Prestamo(id_prestamo) ON UPDATE CASCADE, 
    CONSTRAINT pk_auditoria PRIMARY KEY (id_auditoria)
 );
-
-
 
 
 create index idx_socio_dni on Socio(dni);
@@ -257,13 +255,13 @@ Actualiza la fecha de vencimiento sumando el plazo correspondiente establecido p
 **Casos que maneja:** Detecta la creación de una nueva sanción para un socio específico y actualiza el estado del socio, cambiando su estado en la tabla 'Socio'. Esto evita que el socio pueda sacar nuevos libros mediante el procedimiento de préstamos.
 
 ---
-**Triggers de Auditoría (trg_audit_prestamo_insert,trg_audit_prestamo_update,trg_audit_prestamo_delete)**
+**Triggers de Auditoría (trg_audit_prestamo_insert,trg_audit_prestamo_update)**
 
 **Propósito:** Registrar un historial de todos los movimientos y modificaciones realizados sobre la tabla 'Prestamo' por motivos de seguridad.
 
-**Momento de ejecución:** AFTER INSERT, AFTER UPDATE, AFTER DELETE sobre la tabla 'Prestamo'.
+**Momento de ejecución:** AFTER INSERT, AFTER UPDATE sobre la tabla 'Prestamo'.
 
-**Casos que maneja:** Cada vez que se presta, devuelve, actualiza o elimina un registro de préstamo, el trigger dispara una sentencia que guarda automáticamente la acción realizada en la tabla 'Auditoria_prestamos'. Se encarga de almacenar fecha y hora exactas, y el usuario de la base de datos que realizó la consulta.
+**Casos que maneja:** Cada vez que se presta, devuelve o actualiza un registro de préstamo, el trigger dispara una sentencia que guarda automáticamente la acción realizada en la tabla 'Auditoria_Prestamos'. Se encarga de almacenar fecha y hora exactas, y el usuario de la base de datos que realizó la consulta.
 
 
 
@@ -303,19 +301,24 @@ sys_prompt = """ Sos un Administrador de bases de datos de una biblioteca. Respo
     - stock_total (INT, DEFAULT 0)
     - stock_disponible (INT, DEFAULT 0)
     - id_genero (FK → Genero)
-
-    5. **Autor_libro** (Relación muchos-a-muchos entre Autores y Libros)
+    
+    5. **Libro_genero** (Relación muchos-a-muchos entre Libros y Generos)
+    - id_genero (FK → Genero)
+    - isbn (FK → Libro)
+    - PK: (id_genero, isbn)
+    
+    6. **Autor_libro** (Relación muchos-a-muchos entre Autores y Libros)
     - id_autor (FK → Autor)
     - isbn (FK → Libro)
     - PK: (id_autor, isbn)
 
-    6. **Ejemplar** (Copias físicas de libros)
+    7. **Ejemplar** (Copias físicas de libros)
     - id_ejemplar (PK, auto_increment)
     - isbn (FK → Libro, NOT NULL)
     - nro_ejemplar (INT, NOT NULL)
     - estado_fisico (VARCHAR 20, DEFAULT 'bueno') - Valores: 'bueno', 'regular', 'reparacion', 'baja'
 
-    7. **Prestamo** (Registro de préstamos)
+    8. **Prestamo** (Registro de préstamos)
     - id_prestamo (PK, auto_increment)
     - id_socio (FK → Socio, NOT NULL)
     - id_ejemplar (FK → Ejemplar, NOT NULL)
@@ -324,7 +327,7 @@ sys_prompt = """ Sos un Administrador de bases de datos de una biblioteca. Respo
     - fecha_devolucion (DATE, NULL)
     - estado (VARCHAR 20, DEFAULT 'activo') - Valores: 'activo', 'devuelto', 'vencido'
 
-    8. **Sancion** (Sanciones a socios)
+    9. **Sancion** (Sanciones a socios)
     - id_sancion (PK, auto_increment)
     - id_socio (FK → Socio, NOT NULL)
     - tipo (VARCHAR 50, NOT NULL)
@@ -345,75 +348,148 @@ sys_prompt = """ Sos un Administrador de bases de datos de una biblioteca. Respo
 **Consulta:**"¿Cuáles son los 5 libros más prestados este año?"
 **SQL Generado:**
 ```MySQL
+SELECT l.isbn, l.titulo, COUNT(p.id_prestamo) AS total_prestamos
+FROM Prestamo p
+INNER JOIN Ejemplar e ON p.id_ejemplar = e.id_ejemplar
+INNER JOIN Libro l ON e.isbn = l.isbn
+WHERE YEAR(p.fecha_prestamo) = YEAR(CURDATE())
+GROUP BY l.isbn, l.titulo
+ORDER BY total_prestamos DESC
+LIMIT 5;
+
 ```
 **Resultado:**
-
+![image](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/otros/Pregunta%201.png?raw=true)
 **Análisis de Errores:** 
-
+No se ha encontrado ninguno.
 ### 3.3.2 Pregunta 2
 **Consulta:** "¿Qué socios tienen préstamos vencidos en este momento?"
 **SQL Generado:**
 ```MySQL
+SELECT DISTINCT s.id_socio, s.dni, s.nombre, s.apellido, s.email 
+FROM Socio s 
+INNER JOIN Prestamo p ON s.id_socio = p.id_socio 
+WHERE p.estado = 'vencido' OR (p.fecha_vencimiento < CURDATE() AND p.fecha_devolucion IS NULL);
 ```
 **Resultado:**
-**Análisis de Errores** 
+![image](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/otros/Pregunta%202.png?raw=true)
+**Análisis de Errores**
+No se ha encontrado ninguno.
 ### 3.3.3 Pregunta 3
-**Consulta:** "¿Cuántos ejemplares disponibles hay del libro con ISBN X?"
+**Consulta:** "¿Cuántos ejemplares disponibles hay del libro con ISBN 978-03?"
 **SQL Generado:**
 ```MySQL
+SELECT stock_disponible FROM Libro WHERE isbn = '978-03';
 ```
 **Resultado:**
+Devuelve "stock_disponible" vacío
 **Análisis de Errores:** 
+No se ha encontrado ninguno.
 ### 3.3.4 Pregunta 4
 **Consulta:** "¿Qué libros de ciencia ficción están disponibles para prestar?"
 **SQL Generado:**
 ```MySQL
+SELECT L.isbn, L.titulo, L.stock_disponible
+FROM Libro L
+INNER JOIN Genero G ON L.id_genero = G.id_genero
+WHERE G.nombre = 'Ciencia Ficción' AND L.stock_disponible > 0;
+
 ```
 **Resultado:**
+![image](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/otros/Pregunta%204.png?raw=true)
+
 **Análisis de Errores:** 
+No se ha encontrado ninguno.
 ### 3.3.5 Pregunta 5
-**Consulta:** "¿Cuál es el historial de préstamos del socio con DNI Y?"
+**Consulta:** "¿Cuál es el historial de préstamos del socio con DNI 42345678?"
 **SQL Generado:**
 ```MySQL
+SELECT p.id_prestamo, l.titulo, p.fecha_prestamo, p.fecha_vencimiento, p.fecha_devolucion, p.estado FROM Prestamo p INNER JOIN Socio s ON p.id_socio = s.id_socio INNER JOIN Ejemplar e ON p.id_ejemplar = e.id_ejemplar INNER JOIN Libro l ON e.isbn = l.isbn WHERE s.dni = '42345678';
+
 ```
 **Resultado:**
+![image](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/otros/Pregunta%205.png?raw=true)
+
 **Análisis de Errores:** 
+No se ha encontrado ninguno.
 ### 3.3.6 Pregunta 6
 **Consulta:**  "¿Qué autores tienen más de 3 libros en la biblioteca?"
 **SQL Generado:**
 ```MySQL
+SELECT a.id_autor, a.nombre, a.apellido, COUNT(al.isbn) AS cantidad_libros
+FROM Autor a
+INNER JOIN Autor_libro al ON a.id_autor = al.id_autor
+GROUP BY a.id_autor, a.nombre, a.apellido
+HAVING COUNT(al.isbn) > 3;
 ```
 **Resultado:**
+Devuelve una fila vacía.
+
 **Análisis de Errores:** 
+No se ha encontrado ninguno.
 ### 3.3.7 Pregunta 7
 **Consulta:**  "¿Cuántas sanciones se generaron en el último mes?"
 **SQL Generado:**
 ```MySQL
+SELECT COUNT(*) AS total_sanciones FROM Sancion WHERE fecha_inicio >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
 ```
 **Resultado:**
-**Análisis de Errores:** 
-### 3.3.8 Pregunta 8
-**Consulta:** 
-**SQL Generado:**
-```MySQL
-```
-**Resultado:**
-**Análisis de Errores:** 
-### 3.3.9 Pregunta 9
-**Consulta:** 
-**SQL Generado:**
-```MySQL
-```
-**Resultado:**
-**Análisis de Errores:** 
-### 3.3.10 Pregunta 10
-**Consulta:** 
-**SQL Generado:**
-```MySQL
-```
-**Resultado:**
-**Análisis de Errores:** 
+Devuelve "total_sanciones"=0
 
+**Análisis de Errores:** 
+No se ha encontrado ninguno.
+### 3.3.8 Pregunta 8
+**Consulta:** ¿Qué libros nunca han sido prestados desde que ingresaron al catálogo?
+**SQL Generado:**
+```MySQL
+SELECT l.isbn, l.titulo
+FROM Libro l
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM Ejemplar e
+    INNER JOIN Prestamo p ON e.id_ejemplar = p.id_ejemplar
+    WHERE e.isbn = l.isbn
+);
+```
+**Resultado:**
+![image](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/otros/Pregunta%208.png?raw=true)
+
+**Análisis de Errores:** 
+No se ha encontrado ninguno.
+### 3.3.9 Pregunta 9
+**Consulta:** ¿Cuál es el socio que más préstamos realizó en los últimos 6 meses?
+**SQL Generado:**
+```MySQL
+SELECT s.id_socio, s.dni, s.nombre, s.apellido, COUNT(p.id_prestamo) AS total_prestamos
+FROM Socio s
+INNER JOIN Prestamo p ON s.id_socio = p.id_socio
+WHERE p.fecha_prestamo >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY s.id_socio, s.dni, s.nombre, s.apellido
+ORDER BY total_prestamos DESC
+LIMIT 1;
+```
+**Resultado:**
+![image](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/otros/Pregunta%209.png?raw=true)
+
+**Análisis de Errores:** 
+No se ha encontrado ninguno.
+### 3.3.10 Pregunta 10
+**Consulta:** ¿Qué socios nunca han recibido una sanción desde que se registraron?
+**SQL Generado:**
+```MySQL
+SELECT s.id_socio, s.nombre, s.apellido, s.email,
+       s.fecha_alta, s.estado
+FROM Socio s
+WHERE s.id_socio NOT IN (
+    SELECT DISTINCT id_socio FROM Sancion
+)
+ORDER BY s.fecha_alta;
+```
+**Resultado:**
+![image](https://github.com/unentero/integrador-bdd-biblioIA/blob/main/docs/otros/Pregunta%2010.png?raw=true)
+
+**Análisis de Errores:** 
+No se ha encontrado ninguno
 
 # 4. Módulo de recomendaciones: descripción del algoritmo y ejemplos de salida.
 Para el módulo de recomendaciones, en primer lugar se pide ingresar el **id del socio**, y luego, a través de los procedure **LibrosLeidos** y **Recomendar**, se busca en la base de datos aquellos: libros que el socio ha pedido, y libros **similares** a los ya leídos por el socio que este aún no haya pedido prestados, respectivamente.
